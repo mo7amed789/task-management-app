@@ -68,6 +68,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     FilledButton(onPressed: _busy ? null : _submit, child: _busy ? const CircularProgressIndicator() : const Text('Sign in')),
                     const SizedBox(height: 12),
                     TextButton(onPressed: () => context.go('/register'), child: const Text('Create an account')),
+                    TextButton(onPressed: () async {
+                      final email = _email.text.trim();
+                      if (!email.contains('@')) {
+                        setState(() => _error = 'Enter your email first to reset your password.');
+                        return;
+                      }
+                      await ref.read(authRepositoryProvider).resetPassword(email);
+                      if (!mounted) return;
+                      setState(() => _error = 'Password reset email sent.');
+                    }, child: const Text('Forgot password?')),
                   ],
                 ),
               ),

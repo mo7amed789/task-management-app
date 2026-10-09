@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'dart:async';
 
 import '../config/app_config.dart';
 import '../../features/authentication/presentation/login_page.dart';
@@ -12,7 +13,26 @@ import '../../features/notifications/presentation/notification_page.dart';
 import '../../features/profile/presentation/profile_page.dart';
 import '../../features/tasks/presentation/task_list_page.dart';
 
+class AuthRefreshNotifier extends ChangeNotifier {
+  AuthRefreshNotifier(SupabaseClient client) {
+    _subscription = client.auth.onAuthStateChange.listen((_) => notifyListeners());
+  }
+
+  late final StreamSubscription<AuthState> _subscription;
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+}
+
+final _authRefreshNotifier = AppConfig.isConfigured
+    ? AuthRefreshNotifier(Supabase.instance.client)
+    : null;
+
 final appRouter = GoRouter(
+  refreshListenable: _authRefreshNotifier,
   redirect: (_, state) {
     if (!AppConfig.isConfigured) return null;
     final signedIn = Supabase.instance.client.auth.currentSession != null;

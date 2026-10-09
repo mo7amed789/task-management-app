@@ -26,7 +26,11 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
     setState(() { _busy = true; _error = null; });
     try {
       await ref.read(authRepositoryProvider).signUp(_email.text.trim(), _password.text, _name.text.trim());
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Check your email to verify your account.')));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Account created. Check your email and verify it before signing in.')),
+        );
+      }
     } on AppException catch (error) { if (mounted) setState(() => _error = error.message); }
     finally { if (mounted) setState(() => _busy = false); }
   }
