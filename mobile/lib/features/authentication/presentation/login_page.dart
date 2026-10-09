@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/errors/app_exception.dart';
-import '../data/auth_repository.dart';
 import 'auth_providers.dart';
 import 'package:go_router/go_router.dart';
 

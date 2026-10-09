@@ -43,6 +43,6 @@ class _RegisterPageState extends ConsumerState<RegisterPage> {
           if (_error != null) Padding(padding: const EdgeInsets.only(top: 16), child: Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error))),
           const SizedBox(height: 24),
           FilledButton(onPressed: _busy ? null : _submit, child: _busy ? const CircularProgressIndicator() : const Text('Create account')),
-        ]),
+         ])),
       );
 }

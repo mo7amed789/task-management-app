@@ -53,7 +53,7 @@ class _TaskDetailsPageState extends ConsumerState<TaskDetailsPage> {
         body: ListView(padding: const EdgeInsets.all(20), children: [
           Text(widget.task.title, style: Theme.of(context).textTheme.headlineSmall),
           const SizedBox(height: 24),
-          DropdownButtonFormField<String>(value: _status, decoration: const InputDecoration(labelText: 'Status'), items: const [
+          DropdownButtonFormField<String>(initialValue: _status, decoration: const InputDecoration(labelText: 'Status'), items: const [
             DropdownMenuItem(value: 'backlog', child: Text('Backlog')),
             DropdownMenuItem(value: 'todo', child: Text('To do')),
             DropdownMenuItem(value: 'in_progress', child: Text('In progress')),

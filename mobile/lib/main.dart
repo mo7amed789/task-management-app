@@ -11,7 +11,7 @@ Future<void> main() async {
   if (AppConfig.isConfigured) {
     await Supabase.initialize(
       url: AppConfig.supabaseUrl,
-      anonKey: AppConfig.supabasePublishableKey,
+      publishableKey: AppConfig.supabasePublishableKey,
     );
   }
   runApp(const EnterpriseTaskManagementApp());
