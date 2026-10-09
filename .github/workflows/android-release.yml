@@ -1,0 +1,46 @@
+name: Android release APK
+
+on:
+  workflow_dispatch:
+    inputs:
+      supabase_url:
+        description: Public Supabase project URL
+        required: true
+        type: string
+      supabase_publishable_key:
+        description: Public Supabase publishable/anon key
+        required: true
+        type: string
+
+jobs:
+  build-apk:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Generate Android project
+        run: flutter create --platforms=android --project-name enterprise_task_management .
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - run: flutter analyze
+      - run: flutter test
+      - name: Build release APK
+        run: >-
+          flutter build apk --release
+          --dart-define=SUPABASE_URL=${{ inputs.supabase_url }}
+          --dart-define=SUPABASE_PUBLISHABLE_KEY=${{ inputs.supabase_publishable_key }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: enterprise-task-management-release-apk
+          path: mobile/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error

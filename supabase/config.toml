@@ -1,0 +1,17 @@
+project_id = "enterprise-task-management"
+
+[api]
+enabled = true
+
+[db]
+major_version = 15
+
+[auth]
+enabled = true
+enable_signup = true
+
+[storage]
+enabled = true
+
+[realtime]
+enabled = true

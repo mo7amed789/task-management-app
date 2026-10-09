@@ -1,0 +1,28 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+**/appsettings.json
+**/appsettings.*.json
+**/key.properties
+**/*.jks
+**/*.keystore
+
+# Flutter/Dart generated output
+mobile/.dart_tool/
+mobile/.packages
+mobile/build/
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/ios/Pods/
+mobile/*.iml
+
+# Supabase local state
+supabase/.temp/
+
+# Existing project/tool output
+.vs/
+**/bin/
+**/obj/
+**/node_modules/
+**/dist/
