@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/config/app_config.dart';
 import '../../authentication/presentation/auth_providers.dart';
 import '../../organizations/presentation/organization_page.dart';
 import '../../organizations/presentation/organization_providers.dart';
@@ -12,7 +13,7 @@ class DashboardPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(authRepositoryProvider).currentUser;
+    final user = AppConfig.isConfigured ? ref.watch(authRepositoryProvider).currentUser : null;
     final organizationId = ref.watch(selectedOrganizationProvider);
     return Scaffold(
       appBar: AppBar(
