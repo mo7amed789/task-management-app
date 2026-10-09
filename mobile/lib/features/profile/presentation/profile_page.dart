@@ -36,7 +36,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> {
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(initialValue: _locale, decoration: const InputDecoration(labelText: 'Language'), items: const [DropdownMenuItem(value: 'en', child: Text('English')), DropdownMenuItem(value: 'ar', child: Text('العربية'))], onChanged: (value) => setState(() => _locale = value ?? 'en')),
             const SizedBox(height: 24),
-            FilledButton(onPressed: () async { await ref.read(profileRepositoryProvider).update(displayName: _name.text, locale: _locale); if (!mounted) return; ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Profile updated'))); }, child: const Text('Save changes')),
+            FilledButton(onPressed: () async {
+              await ref.read(profileRepositoryProvider).update(displayName: _name.text, locale: _locale);
+              if (!mounted) return;
+              final messenger = ScaffoldMessenger.of(context);
+              messenger.showSnackBar(const SnackBar(content: Text('Profile updated')));
+            }, child: const Text('Save changes')),
           ]);
         },
       ),
